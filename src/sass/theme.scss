@@ -7,6 +7,12 @@
   --border: rgba(0, 0, 0, 0.12);
 }
 
+html,
+body {
+  min-height: 100vh;
+  background-color: var(--app-background);
+}
+
 body * {
   box-sizing: border-box;
 }

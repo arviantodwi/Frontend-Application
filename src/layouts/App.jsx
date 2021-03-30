@@ -14,12 +14,12 @@ const App = () => {
           <Navigation />
 
           <Switch>
-            <Route path="/">
-              <Home />
-            </Route>
-
             <Route path="/product">
               <Product />
+            </Route>
+
+            <Route path="/">
+              <Home />
             </Route>
           </Switch>
         </div>

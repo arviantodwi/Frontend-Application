@@ -1,0 +1,47 @@
+@use '../mixins' as *;
+@use '../functions' as *;
+
+.navigation {
+  margin-top: 36px;
+  max-width: 25%;
+  @include gutter;
+
+  > ul {
+    @include ul-reset;
+    padding-right: 24px;
+  }
+
+  .link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 4px;
+    text-decoration: none;
+
+    &-active {
+      background-color: rgba(40, 46, 113, 0.06);
+
+      .link-icon svg * {
+        fill: var(--brand-primary);
+      }
+      .link-label {
+        color: var(--brand-primary);
+      }
+    }
+
+    &-icon {
+      @include inline-svg-icon(24px, #333);
+    }
+
+    &-label {
+      color: #333;
+      font-style: normal;
+      font-weight: 600;
+      font-size: rem(15px);
+      line-height: rem(18px);
+      margin-left: 12px;
+    }
+  }
+}
