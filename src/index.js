@@ -5,8 +5,7 @@ import store from "./redux/store";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./layouts/App";
 import reportWebVitals from "./reportWebVitals";
-import "./sass/App.css";
-import "./sass/index.css";
+import "./sass/app.scss";
 
 ReactDOM.render(
   <React.StrictMode>
