@@ -8,7 +8,13 @@ const defaultState = {
   description: "",
 };
 
-export const setInitialData = ({ id, name, type, picture, description }) => ({
+export const setInitialProductData = ({
+  id,
+  name,
+  type,
+  picture,
+  description,
+}) => ({
   type: PRODUCT_INITIAL_DATA,
   payload: {
     id,

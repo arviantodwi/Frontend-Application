@@ -1,0 +1,53 @@
+@use '../functions' as *;
+
+.user {
+  max-width: 25%;
+  margin-top: 96px;
+  padding-left: 24px;
+
+  &-wrap {
+    background-color: rgba(40, 46, 113, 0.04);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-photo {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    margin-top: -48px;
+    margin-bottom: 16px;
+
+    > img {
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &-fname {
+    font-style: normal;
+    font-weight: bold;
+    font-size: rem(24px);
+    line-height: rem(26px);
+    text-align: center;
+    color: #000000;
+    margin-bottom: 2px;
+  }
+
+  &-lname {
+    font-style: normal;
+    font-weight: normal;
+    font-size: rem(16px);
+    line-height: rem(26px);
+    text-align: center;
+    color: #333333;
+    margin-bottom: 6px;
+  }
+}

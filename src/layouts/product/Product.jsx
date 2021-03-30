@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { toggleTab } from "../../redux/reducers/tab";
-import { setInitialData } from "../../redux/reducers/product";
+import { setInitialProductData } from "../../redux/reducers/product";
+import { setInitialUserData } from "../../redux/reducers/user";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
+import User from "../../components/User";
 
 const Description = (props) => {
   return <article className="description">{parse(props.text)}</article>;
@@ -11,54 +13,70 @@ const Description = (props) => {
 
 const Attributes = () => {};
 
-const Product = ({ tabIndex, product, toggleTab, setInitialData }) => {
+const Product = ({
+  tabIndex,
+  product,
+  toggleTab,
+  setInitialProductData,
+  setInitialUserData,
+}) => {
   useEffect(() => {
     fetch("https://api-test.innoloft.com/product/6781/")
       .then((response) => response.json())
       .then((payload) => {
-        const { id, name, type, picture, description } = payload;
-        setInitialData({
+        const { id, name, type, picture, description, user } = payload;
+        setInitialProductData({
           id,
           name,
           type,
           picture,
           description,
         });
+        setInitialUserData({
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          profilePicture: user.profilePicture,
+        });
       });
-  }, []);
+  }, [setInitialProductData, setInitialUserData]);
 
   return (
-    <div className="product">
-      <div className="product-header">
-        <h1 className="name">{product.name}</h1>
-        <div className="type">{product.type.name}</div>
-      </div>
-
-      <div className="product-cover">
-        <img src={product.picture} alt={`${product.name} product cover`} />
-      </div>
-
-      <div className="product-content">
-        <div className="tabs">
-          <div className={`tab ${tabIndex === 0 && "tab-active"}`}>
-            <button onClick={toggleTab}>Description</button>
-          </div>
-          <div className="v-divider"></div>
-          <div className={`tab ${tabIndex === 1 && "tab-active"}`}>
-            <button onClick={toggleTab}>Attributes</button>
-          </div>
-          <div className="h-indicator"></div>
+    <>
+      <div className="product">
+        <div className="product-header">
+          <h1 className="name">{product.name}</h1>
+          <div className="type">{product.type.name}</div>
         </div>
 
-        <div className="content-area">
-          {tabIndex === 0 ? (
-            <Description text={product.description} />
-          ) : (
-            "Attributes content"
-          )}
+        <div className="product-cover">
+          <img src={product.picture} alt={`${product.name} product cover`} />
+        </div>
+
+        <div className="product-content">
+          <div className="tabs">
+            <div className={`tab ${tabIndex === 0 && "tab-active"}`}>
+              <button onClick={toggleTab}>Description</button>
+            </div>
+            <div className="v-divider"></div>
+            <div className={`tab ${tabIndex === 1 && "tab-active"}`}>
+              <button onClick={toggleTab}>Attributes</button>
+            </div>
+            <div className="h-indicator"></div>
+          </div>
+
+          <div className="content-area">
+            {tabIndex === 0 ? (
+              <Description text={product.description} />
+            ) : (
+              "Attributes content"
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      <User />
+    </>
   );
 };
 
@@ -74,7 +92,8 @@ const mapStateToProps = ({ tabReducer: { tabIndex }, productReducer }) => ({
 
 const mapDispatchToProps = {
   toggleTab,
-  setInitialData,
+  setInitialProductData,
+  setInitialUserData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
