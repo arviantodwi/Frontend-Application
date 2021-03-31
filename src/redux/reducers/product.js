@@ -6,6 +6,9 @@ const defaultState = {
   type: {},
   picture: "",
   description: "",
+  categories: [],
+  businessModels: [],
+  trl: {},
 };
 
 export const setInitialProductData = ({
@@ -14,6 +17,9 @@ export const setInitialProductData = ({
   type,
   picture,
   description,
+  categories,
+  businessModels,
+  trl,
 }) => ({
   type: PRODUCT_INITIAL_DATA,
   payload: {
@@ -22,6 +28,9 @@ export const setInitialProductData = ({
     type,
     picture,
     description,
+    categories,
+    businessModels,
+    trl,
   },
 });
 

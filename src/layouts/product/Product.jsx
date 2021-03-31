@@ -6,12 +6,53 @@ import { setInitialUserData } from "../../redux/reducers/user";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import User from "../../components/User";
+import SVG from "react-inlinesvg";
+import categoriesIcon from "../../images/icon-categories.svg";
+import modelsIcon from "../../images/icon-models.svg";
+import trlIcon from "../../images/icon-trl.svg";
 
 const Description = (props) => {
   return <article className="description">{parse(props.text)}</article>;
 };
 
-const Attributes = () => {};
+const Attributes = (props) => {
+  const categories = props.categories
+    .map((category) => category.name)
+    .join(", ");
+  const models = props.models.map((model) => model.name).join(", ");
+
+  return (
+    <div className="attributes">
+      <div className="attribute">
+        <div className="attribute-label">
+          <span>Categories</span>
+          <i>
+            <SVG src={categoriesIcon} width={16} height={16} />
+          </i>
+        </div>
+        <div className="attribute-value">{categories}</div>
+      </div>
+      <div className="attribute">
+        <div className="attribute-label">
+          <span>Business Models</span>
+          <i>
+            <SVG src={modelsIcon} width={16} height={16} />
+          </i>
+        </div>
+        <div className="attribute-value">{models}</div>
+      </div>
+      <div className="attribute">
+        <div className="attribute-label">
+          <span>TRL (Technology Readiness Level)</span>
+          <i>
+            <SVG src={trlIcon} width={16} height={16} />
+          </i>
+        </div>
+        <div className="attribute-value">{props.trl.name}</div>
+      </div>
+    </div>
+  );
+};
 
 const Product = ({
   tabIndex,
@@ -24,22 +65,46 @@ const Product = ({
     fetch("https://api-test.innoloft.com/product/6781/")
       .then((response) => response.json())
       .then((payload) => {
-        const { id, name, type, picture, description, user } = payload;
+        const {
+          id,
+          name,
+          type,
+          picture,
+          description,
+          categories,
+          businessModels,
+          trl,
+          user,
+          company,
+        } = payload;
         setInitialProductData({
           id,
           name,
           type,
           picture,
           description,
+          categories,
+          businessModels,
+          trl,
         });
         setInitialUserData({
           id: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
           profilePicture: user.profilePicture,
+          company,
         });
       });
   }, [setInitialProductData, setInitialUserData]);
+
+  const onTabButtonClick = (index) => {
+    const activeIndex = tabIndex;
+    if (index === activeIndex) {
+      return;
+    }
+
+    toggleTab();
+  };
 
   return (
     <>
@@ -56,20 +121,29 @@ const Product = ({
         <div className="product-content">
           <div className="tabs">
             <div className={`tab ${tabIndex === 0 && "tab-active"}`}>
-              <button onClick={toggleTab}>Description</button>
+              <button onClick={() => onTabButtonClick(0)}>Description</button>
             </div>
             <div className="v-divider"></div>
             <div className={`tab ${tabIndex === 1 && "tab-active"}`}>
-              <button onClick={toggleTab}>Attributes</button>
+              <button onClick={() => onTabButtonClick(1)}>Attributes</button>
             </div>
-            <div className="h-indicator"></div>
+            <div
+              className="h-indicator"
+              style={{
+                transform: tabIndex === 1 && "translateX(100%)",
+              }}
+            ></div>
           </div>
 
           <div className="content-area">
             {tabIndex === 0 ? (
               <Description text={product.description} />
             ) : (
-              "Attributes content"
+              <Attributes
+                categories={product.categories}
+                models={product.businessModels}
+                trl={product.trl}
+              />
             )}
           </div>
         </div>

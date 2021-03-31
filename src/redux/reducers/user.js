@@ -5,6 +5,7 @@ const defaultState = {
   firstName: "",
   lastName: "",
   profilePicture: "",
+  company: {},
 };
 
 export const setInitialUserData = ({
@@ -12,6 +13,7 @@ export const setInitialUserData = ({
   firstName,
   lastName,
   profilePicture,
+  company,
 }) => ({
   type: USER_INITIAL_DATA,
   payload: {
@@ -19,6 +21,7 @@ export const setInitialUserData = ({
     firstName,
     lastName,
     profilePicture,
+    company,
   },
 });
 

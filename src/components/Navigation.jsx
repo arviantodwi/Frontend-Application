@@ -2,6 +2,8 @@ import { NavLink } from "react-router-dom";
 import HomeIcon from "../images/icon-home.svg";
 import ProductIcon from "../images/icon-product.svg";
 import SVG from "react-inlinesvg";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 const NavigationLink = (props) => (
   <NavLink
@@ -17,8 +19,11 @@ const NavigationLink = (props) => (
   </NavLink>
 );
 
-const Navigation = () => (
-  <nav className="navigation">
+const Navigation = ({ showMobileNav }) => (
+  <nav
+    className="navigation"
+    style={{ display: showMobileNav === true && "block" }}
+  >
     <ul>
       <li>
         <NavigationLink href="/" label="Home" icon={HomeIcon} />
@@ -30,4 +35,12 @@ const Navigation = () => (
   </nav>
 );
 
-export default Navigation;
+Navigation.propTypes = {
+  showMobileNav: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = ({ mobileNavReducer: { showMobileNav } }) => ({
+  showMobileNav,
+});
+
+export default connect(mapStateToProps, null)(Navigation);
