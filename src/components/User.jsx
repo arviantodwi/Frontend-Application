@@ -2,8 +2,12 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import SVG from "react-inlinesvg";
 import companyIcon from "../images/icon-company.svg";
+import Map from "./Map";
 
 const User = ({ firstName, lastName, profilePicture, company }) => {
+  // const CompanyMap =
+  //   company.address.latitude && company.address.longitude ? <Map /> : null;
+
   return (
     <div className="user">
       <div className="user-wrap">
@@ -19,6 +23,8 @@ const User = ({ firstName, lastName, profilePicture, company }) => {
           </i>
           <span>{company.name}</span>
         </div>
+
+        <div className="user-map">{/* <CompanyMap /> */}</div>
       </div>
     </div>
   );
